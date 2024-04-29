@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Queue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        #video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .video {
+            margin: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 70%;
+            margin: 10px;
+        }
+        button {
+            padding: 8px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>YouTube Video Queue</h1>
+        <input type="text" id="videoUrl" placeholder="Paste YouTube video URL">
+        <button onclick="addToQueue()">Add to Queue</button>
+    </header>
+
+    <div id="video-container"></div>
+
+    <script>
+        let videoQueue = [];
+
+        function addToQueue() {
+            let videoUrl = document.getElementById("videoUrl").value;
+            if (videoUrl !== "") {
+                videoQueue.push(videoUrl);
+                displayQueue();
+                document.getElementById("videoUrl").value = "";
+            }
+        }
+
+        function displayQueue() {
+            let container = document.getElementById("video-container");
+            container.innerHTML = "";
+            videoQueue.forEach(function(videoUrl) {
+                let videoId = videoUrl.split("=")[1];
+                let videoFrame = `<div class="video"><iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>`;
+                container.innerHTML += videoFrame;
+            });
+        }
+    </script>
+</body>
+</html>
